@@ -1,2 +1,0 @@
-# E-shop vanilla Curso
- 

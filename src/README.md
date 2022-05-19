@@ -1,4 +1,7 @@
 # E-shop vanilla Curso
 
-onde explico o que foi criado, fazer bem feito portugues e ingles
+# criação de loja utilizando apenas JavaScript vanilla
+# Layout da loja dividido em: header, main e foot
+
+# Estrategia usada SPA
  

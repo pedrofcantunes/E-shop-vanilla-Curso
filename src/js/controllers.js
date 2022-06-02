@@ -87,4 +87,5 @@ App.controllers = {
         this.createMain()
         this.createFooter()
     },
-}
+}   
+

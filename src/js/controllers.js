@@ -1,5 +1,29 @@
 App.controllers = {
+    getPage() {
+        const paramsString = window.location.search;
+        let searchParams = new URLSearchParams(paramsString);
+        const page = searchParams.get("p");
+        return page;
+    },
 
+    router() {
+        console.log(window.location.search)
+
+        const page = this.getPage()
+        if (page === "cart") {
+            this.createCheckout()
+        } else if (!page) {
+            this.createMain()
+        } else {
+            this.createError()
+        }	
+    },
+
+    go(p) {
+        history.pushState({ p }, "", App.state.routes[p])
+        this.router()
+    },
+    
     createHeader() {
         const els = App.elements
         const header = els.header
@@ -14,6 +38,10 @@ App.controllers = {
                         
         header.logo.src = "./assets/logo.png"
         header.logo.style.margin = "35px 0 35px 48px"
+        header.logo.style.cursor = "pointer"
+        header.logo.onclick = () => {
+            App.controllers.go("home")
+        }
 
         header.cartIcon.src = "./assets/cart.png"
         header.cartIcon.style.width = "36px"
@@ -21,19 +49,19 @@ App.controllers = {
         header.cartIcon.style.marginRight = "53px"
         header.cartIcon.style.cursor = "pointer"
         header.cartIcon.onclick = () => {
-            console.log("click cart")
+            App.controllers.go("cart")
         }
                
         header.container.appendChild(header.logo)
         header.container.appendChild(header.cartIcon)
+        
         els.root.appendChild(header.container)
     },
 
     createMain() {
         const els = App.elements
         const main = els.main.main
-        console.log(main)
-
+        
         main.bg.src = "./assets/bcg.png"
         main.bg.style.width = "100%"
         
@@ -57,8 +85,10 @@ App.controllers = {
         main.container.appendChild(main.h1)
         main.container.appendChild(main.p)
 
+        els.main.container.innerHTML = ""
         els.main.container.appendChild(main.container)
     },
+
     createCheckout () {
         const els = App.elements
         const { container, title, items, confirmBtn, confirmBtnContainer } = els.main.checkout
@@ -82,7 +112,25 @@ App.controllers = {
 
         container.appendChild(title)
         container.appendChild(confirmBtnContainer)
+
+        els.main.container.innerHTML = ""
         els.main.container.appendChild(container)
+    },
+
+    createError() {
+        const els = App.elements
+        const error = els.main.error
+                
+        error.errorEvent.innerText = "Error 404 - Page not found"
+        error.errorEvent.style.width = "100%"
+        error.errorEvent.style.marginTop = "600px"
+        error.errorEvent.style.textAlign = "center"
+        error.errorEvent.style.fontSize = "50px"
+
+        error.container.appendChild(error.errorEvent)
+
+        els.main.container.innerHTML = ""
+        els.main.container.appendChild(error.container)
     },
     
     createFooter() {
@@ -111,7 +159,8 @@ App.controllers = {
         this.createHeader()
 
         //this.createMain()
-        this.createCheckout()
+        //this.createCheckout()
+        //this.createError()
         els.main.container.style.flexGrow = "1"
         els.root.appendChild(els.main.container)
 

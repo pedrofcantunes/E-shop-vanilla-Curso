@@ -22,6 +22,10 @@ App.elements = {
         confirmBtnContainer: document.createElement("div"),
         confirmBtn: document.createElement("button"),
     },
+    error: {
+        container: document.createElement("div"),
+        errorEvent: document.createElement("h1"),
+    },
     },
     footer: {
         container: document.createElement("div"),

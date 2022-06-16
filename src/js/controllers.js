@@ -166,5 +166,26 @@ App.controllers = {
 
         this.createFooter()
     },
+
+    createBtn(content) {
+        const el = document.createElement("button")
+
+        el.style.display = "flex"
+        el.style.flexDirection = "column"
+        el.style.justifyContent = "center"
+        el.style.alignItems = "center"
+        el.style.padding = "5px 16px"
+        el.style.width = "84px"
+        el.style.height = "32px"
+        el.style.background = "#000000"
+        el.style.boxShadow = "0px 2px 0px rgba(0, 0, 0, 0.043)"
+        el.style.borderRadius = "20px"
+        el.style.color = "#FFFFFF"
+
+        el.innerHTML = content
+
+        return el
+    }
+
 }   
 

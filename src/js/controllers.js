@@ -207,7 +207,60 @@ App.controllers = {
         el.innerHTML = content
 
         return el
+    },
+
+    createCard() {
+        const el = document.createElement("div")
+
+        el.style.display = "flex"
+        el.style.flexDirection = "column"
+        el.style.alignItems = "center"
+        el.style.border = "1px solid black"
+
+        const img = document.createElement("img")
+        img.src = "./assets/bcg.png"
+        img.style.maxWidth = "300px"
+        img.style.maxHeight = "300px"
+        img.style.borderRadius = "50%"	
+
+        const title = document.createElement("div")	
+        title.style.fontWeight = "700"
+        title.style.fontSize = "16px"
+        title.style.lineHeight = "19px"
+        title.style.color = "#000000"
+        title.style.marginTop = "40px"
+        title.innerText = "Title"
+
+        const price = document.createElement("div")
+        price.style.fontWeight = "400"
+        price.style.fontSize = "16px"
+        price.style.lineHeight = "19px"
+        price.style.marginTop = "4px"
+        price.innerHTML = "USD 1.99"
+
+        const desc = document.createElement("div")
+        desc.style.fontWeight = "400"
+        desc.style.fontSize = "16px"
+        desc.style.lineHeight = "19px"
+        desc.style.marginTop = "4px"
+        desc.innerHTML = "description of the product"
+       
+        const btn = this.createBtn("Add to cart", "primary", () => {
+            console.log("[]...cliked")
+        })
+        
+        btn.style.marginTop = "4px"
+
+        el.appendChild(img)
+        el.appendChild(title)
+        el.appendChild(price)
+        el.appendChild(desc)
+        el.appendChild(btn)
+
+
+        return el
     }
 
 }   
 
+ 

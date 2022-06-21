@@ -2,25 +2,17 @@ const App = {
     init() {
         console.log("start")
 
-        //this.controllers.createLayout()
-        //this.controllers.router()
+        this.controllers.createLayout()
+        this.controllers.router()
 
-        const el = this.controllers.createCard()
+       //const el = this.controllers.createModal("hello")
+       // const btn = this.controllers.createBtn("click me", "primary", () => {
+       //     console.log("[]...clicked")
+       //     this.controllers.openModal(el)
+       // })
+
         this.elements.root.appendChild(el)
-
-        //const el = this.controllers.createBtn("test", "primary", () => {
-        //    console.log("click")
-        //})
-        //this.elements.root.appendChild(el)
-
-        //const el2 = this.controllers.createBtn("test", "secondary")
-        //this.elements.root.appendChild(el2)
-
-        //const el3 = this.controllers.createBtn("test", "default")
-        //this.elements.root.appendChild(el3)
-
-        //const el4 = this.controllers.createBtn("test", "other")
-        //this.elements.root.appendChild(el4)
+        this.elements.root.appendChild(btn)
 
         console.log("end")
     },

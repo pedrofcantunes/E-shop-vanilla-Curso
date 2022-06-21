@@ -259,7 +259,87 @@ App.controllers = {
 
 
         return el
-    }
+    },
+
+    createModal(children) {
+        const el = document.createElement("div")
+        const modal = document.createElement("div")
+
+        const closeModal = () => {
+            console.log("[close modal]...")	
+            this.closeModal(el)
+        }
+
+        el.style.display = "flex"
+        el.style.justifyContent = "center"
+        el.style.alignItems = "center"
+        el.style.position = "fixed"
+        el.style.top = "0"
+        el.style.left = "0"
+        el.style.width = "100%"
+        el.style.height = "100%"
+        el.style.backgroundColor = "rgba(0, 0, 0, 0.5)"
+        el.classList.add("backdrop")
+        el.onclick = (e) => {
+          if (e.target.classList.contains("backdrop")) {
+            closeModal()
+          }
+        }
+
+        modal.style.background = "#FFFFFF"
+        modal.style.flexDirection = "column"
+        modal.style.borderRadius = "4px"
+        modal.style.width = "fit-content"
+        modal.style.display = "flex"
+        
+        const close = document.createElement("div")
+        close.style.display = "flex"
+        close.style.justifyContent = "center"
+        close.style.alignItems = "center"
+        close.style.width = "fit-content"
+        close.style.padding = "10px"
+        close.style.background = "rgba(0, 0, 0, 0.6)"
+        close.style.color = "#FFFFFF"
+        close.style.borderRadius = "4px"
+        close.style.cursor = "pointer"
+        close.style.marginTop = "11px"
+        close.style.marginRight = "12px"
+        close.style.alignSelf = "flex-end"
+        close.innerHTML = "X"
+        close.onclick = closeModal
+        
+        const body = document.createElement("div")
+        body.innerHTML = children
+
+        const footer = document.createElement("div")
+        footer.style.display = "flex"
+        footer.style.justifyContent = "space-between"
+        footer.style.margin = "45px 82px 71px 81px"
+        
+        const cancel = this.createBtn("Cancel", "other", closeModal)
+        cancel.style.cursor = "pointer"
+        footer.appendChild(cancel)
+
+        const ok = this.createBtn("Confirm", "secondary")
+        ok.style.cursor = "pointer"
+        ok.style.marginLeft = "24px"
+        footer.appendChild(ok)
+
+        modal.appendChild(close)
+        modal.appendChild(body)
+        modal.appendChild(footer)
+        el.appendChild(modal)
+
+        return el
+    },
+
+    openModal(el) {
+        el.style.display = "flex"
+    },
+
+    closeModal(el) {
+        el.style.display = "none"
+    },
 
 }   
 

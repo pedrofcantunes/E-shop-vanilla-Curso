@@ -32,3 +32,4 @@ App.elements = {
         logo: document.createElement("img"),
     },
 }
+

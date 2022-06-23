@@ -166,5 +166,181 @@ App.controllers = {
 
         this.createFooter()
     },
+
+    createBtn(content, type = "primary", onClick) {
+        const el = document.createElement("button")
+        
+        el.style.display = "flex"
+        el.style.flexDirection = "column"
+        el.style.justifyContent = "center"
+        el.style.alignItems = "center"
+        el.style.padding = "5px 16px"
+        el.style.height = "32px"
+        el.style.borderRadius = "20px"
+        el.style.color = "#FFFFFF"
+        el.style.border = "none"
+
+        if (type === "primary") {
+         el.style.background = "#000000"
+         el.style.boxShadow = "0px 2px 0px rgba(0, 0, 0, 0.043)"
+        }
+
+        if (type === "secondary") {
+         el.style.background = "rgba(0, 0, 0, 0.6)"
+         el.style.boxShadow = "0px 4px 4px rgba(0, 0, 0, 0.25)"
+        }
+
+        if (type === "other") {
+         el.style.background = "rgba(0, 0, 0, 0.2)"
+         el.style.boxShadow = "0px 4px 4px rgba(0, 0, 0, 0.25)"
+        }
+
+        if (type === "default") {
+         el.style.background = "#ffffff"
+         el.style.boxShadow = "0px 2px 0px rgba(0, 0, 0, 0.043)"
+         el.style.border = "2px solid #000000"
+         el.style.color = "#000000"
+        }
+
+        el.onclick = onClick
+
+        el.innerHTML = content
+
+        return el
+    },
+
+    createCard() {
+        const el = document.createElement("div")
+
+        el.style.display = "flex"
+        el.style.flexDirection = "column"
+        el.style.alignItems = "center"
+        el.style.border = "1px solid black"
+
+        const img = document.createElement("img")
+        img.src = "./assets/bcg.png"
+        img.style.maxWidth = "300px"
+        img.style.maxHeight = "300px"
+        img.style.borderRadius = "50%"	
+
+        const title = document.createElement("div")	
+        title.style.fontWeight = "700"
+        title.style.fontSize = "16px"
+        title.style.lineHeight = "19px"
+        title.style.color = "#000000"
+        title.style.marginTop = "40px"
+        title.innerText = "Title"
+
+        const price = document.createElement("div")
+        price.style.fontWeight = "400"
+        price.style.fontSize = "16px"
+        price.style.lineHeight = "19px"
+        price.style.marginTop = "4px"
+        price.innerHTML = "USD 1.99"
+
+        const desc = document.createElement("div")
+        desc.style.fontWeight = "400"
+        desc.style.fontSize = "16px"
+        desc.style.lineHeight = "19px"
+        desc.style.marginTop = "4px"
+        desc.innerHTML = "description of the product"
+       
+        const btn = this.createBtn("Add to cart", "primary", () => {
+            console.log("[]...cliked")
+        })
+        
+        btn.style.marginTop = "4px"
+
+        el.appendChild(img)
+        el.appendChild(title)
+        el.appendChild(price)
+        el.appendChild(desc)
+        el.appendChild(btn)
+
+
+        return el
+    },
+
+    createModal(children) {
+        const el = document.createElement("div")
+        const modal = document.createElement("div")
+
+        const closeModal = () => {
+            console.log("[close modal]...")	
+            this.closeModal(el)
+        }
+
+        el.style.display = "flex"
+        el.style.justifyContent = "center"
+        el.style.alignItems = "center"
+        el.style.position = "fixed"
+        el.style.top = "0"
+        el.style.left = "0"
+        el.style.width = "100%"
+        el.style.height = "100%"
+        el.style.backgroundColor = "rgba(0, 0, 0, 0.5)"
+        el.classList.add("backdrop")
+        el.onclick = (e) => {
+          if (e.target.classList.contains("backdrop")) {
+            closeModal()
+          }
+        }
+
+        modal.style.background = "#FFFFFF"
+        modal.style.flexDirection = "column"
+        modal.style.borderRadius = "4px"
+        modal.style.width = "fit-content"
+        modal.style.display = "flex"
+        
+        const close = document.createElement("div")
+        close.style.display = "flex"
+        close.style.justifyContent = "center"
+        close.style.alignItems = "center"
+        close.style.width = "fit-content"
+        close.style.padding = "10px"
+        close.style.background = "rgba(0, 0, 0, 0.6)"
+        close.style.color = "#FFFFFF"
+        close.style.borderRadius = "4px"
+        close.style.cursor = "pointer"
+        close.style.marginTop = "11px"
+        close.style.marginRight = "12px"
+        close.style.alignSelf = "flex-end"
+        close.innerHTML = "X"
+        close.onclick = closeModal
+        
+        const body = document.createElement("div")
+        body.innerHTML = children
+
+        const footer = document.createElement("div")
+        footer.style.display = "flex"
+        footer.style.justifyContent = "space-between"
+        footer.style.margin = "45px 82px 71px 81px"
+        
+        const cancel = this.createBtn("Cancel", "other", closeModal)
+        cancel.style.cursor = "pointer"
+        footer.appendChild(cancel)
+
+        const ok = this.createBtn("Confirm", "secondary")
+        ok.style.cursor = "pointer"
+        ok.style.marginLeft = "24px"
+        footer.appendChild(ok)
+
+        modal.appendChild(close)
+        modal.appendChild(body)
+        modal.appendChild(footer)
+        el.appendChild(modal)
+
+        return el
+    },
+
+    openModal(el) {
+        el.style.display = "flex"
+    },
+
+    closeModal(el) {
+        el.style.display = "none"
+    },
+
 }   
 
+ 

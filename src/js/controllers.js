@@ -209,51 +209,53 @@ App.controllers = {
         return el
     },
 
-    createCard() {
+    createCard( title, description, price, imgs, onClick) {
         const el = document.createElement("div")
 
         el.style.display = "flex"
         el.style.flexDirection = "column"
         el.style.alignItems = "center"
-        el.style.border = "1px solid black"
+        el.style.width = "fit-content"
+        el.style.padding = "1rem"
 
-        const img = document.createElement("img")
-        img.src = "./assets/bcg.png"
-        img.style.maxWidth = "300px"
-        img.style.maxHeight = "300px"
-        img.style.borderRadius = "50%"	
+        //const img = document.createElement("img")
+        //img.src = "./assets/bcg.png"
+        //img.style.maxWidth = "300px"
+        //img.style.maxHeight = "300px"
+        //img.style.borderRadius = "50%"
+        const imgContainer = document.createElement("div")
+        
+        const carousel = new Carousel({ imgs, container: imgContainer })
 
-        const title = document.createElement("div")	
-        title.style.fontWeight = "700"
-        title.style.fontSize = "16px"
-        title.style.lineHeight = "19px"
-        title.style.color = "#000000"
-        title.style.marginTop = "40px"
-        title.innerText = "Title"
+        const titleEl = document.createElement("div")	
+        titleEl.style.fontWeight = "700"
+        titleEl.style.fontSize = "16px"
+        titleEl.style.lineHeight = "19px"
+        titleEl.style.color = "#000000"
+        titleEl.style.marginTop = "40px"
+        titleEl.innerText = title
 
-        const price = document.createElement("div")
-        price.style.fontWeight = "400"
-        price.style.fontSize = "16px"
-        price.style.lineHeight = "19px"
-        price.style.marginTop = "4px"
-        price.innerHTML = "USD 1.99"
+        const priceEl = document.createElement("div")
+        priceEl.style.fontWeight = "400"
+        priceEl.style.fontSize = "16px"
+        priceEl.style.lineHeight = "19px"
+        priceEl.style.marginTop = "4px"
+        priceEl.innerHTML = this.currencyFormat(price)
 
         const desc = document.createElement("div")
         desc.style.fontWeight = "400"
         desc.style.fontSize = "16px"
         desc.style.lineHeight = "19px"
         desc.style.marginTop = "4px"
-        desc.innerHTML = "description of the product"
+        desc.innerHTML = description
        
-        const btn = this.createBtn("Add to cart", "primary", () => {
-            console.log("[]...cliked")
-        })
+        const btn = this.createBtn("Add to cart", "primary", onClick)
         
         btn.style.marginTop = "4px"
 
-        el.appendChild(img)
-        el.appendChild(title)
-        el.appendChild(price)
+        el.appendChild(imgContainer)
+        el.appendChild(titleEl)
+        el.appendChild(priceEl)
         el.appendChild(desc)
         el.appendChild(btn)
 
@@ -339,6 +341,16 @@ App.controllers = {
 
     closeModal(el) {
         el.style.display = "none"
+    },
+
+    currencyFormat(value) {
+        if (typeof value === "string") {
+      }
+
+      return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(value)
     },
 
 }   

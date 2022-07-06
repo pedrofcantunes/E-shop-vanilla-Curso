@@ -7,7 +7,10 @@ App.controllers = {
     },
 
     router() {
-        console.log(window.location.search)
+    setInterval(() => {
+        if (App.state.routerRendered) {
+            return
+        }
 
         const page = this.getPage()
         if (page === "cart") {
@@ -16,12 +19,27 @@ App.controllers = {
             this.createMain()
         } else {
             this.createError()
-        }	
+        }
+
+        App.state.routerRendered = true	
+      },100)
     },
 
     go(p) {
+        App.state.routerRendered = false
         history.pushState({ p }, "", App.state.routes[p])
         this.router()
+    },
+
+    createProductsElements(container) {
+        App.state.products.forEach(product => {
+            const card = this.createCard 
+            (product.name, product.description, product.price, product.images, () => {
+           console.log("[clicou]...", product)
+       })
+       console.log(card)
+       container.appendChild(card)
+       })
     },
     
     createHeader() {
@@ -61,6 +79,8 @@ App.controllers = {
     createMain() {
         const els = App.elements
         const main = els.main.main
+
+        main.itemsContainer
         
         main.bg.src = "./assets/bcg.png"
         main.bg.style.width = "100%"
@@ -81,9 +101,15 @@ App.controllers = {
         main.p.style.lineHeight = "29px"
         main.p.style.color = "#000000"
 
+        main.itemsContainer.style.display = "flex"
+        main.itemsContainer.style.flexWrap = "wrap"
+        main.itemsContainer.style.justifyContent = "center"
+        this.createProductsElements(main.itemsContainer)
+
         main.container.appendChild(main.bg)
         main.container.appendChild(main.h1)
         main.container.appendChild(main.p)
+        main.container.appendChild(main.itemsContainer)
 
         els.main.container.innerHTML = ""
         els.main.container.appendChild(main.container)

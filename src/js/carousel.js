@@ -92,6 +92,6 @@ class Carousel {
             el.style.borderRadius = "50%"
 
             this.imageEls.push(el)
-        })
+        });
     }
 }

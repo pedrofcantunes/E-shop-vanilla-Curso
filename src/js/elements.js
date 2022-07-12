@@ -3,7 +3,10 @@ App.elements = {
     header: {
         container: document.createElement("div"),
         logo: document.createElement("img"),
+        
+        cartContainer: document.createElement("div"),
         cartIcon: document.createElement("img"),
+        cartCount: document.createElement("span"),
     },
     main: {
         container: document.createElement("div"),

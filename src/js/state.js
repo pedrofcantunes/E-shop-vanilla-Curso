@@ -41,11 +41,21 @@ App.state = {
         },        
             
     ],
+
+    cart: [],
     
     routes: {
         home: `${window.location.origin}${window.location.pathname}`,
         cart: "?p=cart",
     },
-    routerRendered: false
+    routerRendered: false,
+
+    addToCArt(product) {
+        if (this.cart.find(item => item.id === product.id)) {
+            return false
+        }
+        this.cart.push(product);
+        return true
+    },
    
 }

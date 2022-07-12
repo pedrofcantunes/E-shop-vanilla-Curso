@@ -36,6 +36,11 @@ App.controllers = {
             const card = this.createCard 
             (product.name, product.description, product.price, product.images, () => {
            console.log("[clicou]...", product)
+           const res = confirm("Deseja adicinar o produto ao carrinho?")
+           if (res) {
+            App.state.addToCArt(product)
+            App.elements.header.cartCount.innerText = App.state.cart.length
+           }  
        })
        console.log(card)
        container.appendChild(card)
@@ -64,15 +69,23 @@ App.controllers = {
         header.cartIcon.src = "./assets/cart.png"
         header.cartIcon.style.width = "36px"
         header.cartIcon.style.height = "36px"
-        header.cartIcon.style.marginRight = "53px"
+        
         header.cartIcon.style.cursor = "pointer"
         header.cartIcon.onclick = () => {
             App.controllers.go("cart")
         }
+
+        header.cartCount.innerText = App.state.cart.length
+        header.cartCount.style.color = "white"
+
+        header.cartContainer.style.marginRight = "53px"
+
+        header.cartContainer.appendChild(header.cartIcon)
+        header.cartContainer.appendChild(header.cartCount)
                
         header.container.appendChild(header.logo)
-        header.container.appendChild(header.cartIcon)
-        
+        header.container.appendChild(header.cartContainer)
+                
         els.root.appendChild(header.container)
     },
 

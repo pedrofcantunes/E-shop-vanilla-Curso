@@ -50,12 +50,19 @@ App.state = {
     },
     routerRendered: false,
 
+    mutations: {
     addToCArt(product) {
-        if (this.cart.find(item => item.id === product.id)) {
-            return false
+        if (App.state.cart.find((p) => p.id === product.id)) {
+            return "EXISTS"
         }
-        this.cart.push(product);
-        return true
+        App.state.cart.push(product)
+        return "OK"
+    },
+
+    removeFromCart(product) {
+        App.state.cart = App.state.cart.filter((p) => p.id !== product.id)
+    },
+
     },
    
 }

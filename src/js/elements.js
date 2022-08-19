@@ -23,6 +23,7 @@ App.elements = {
         title: document.createElement("h1"),
         confirmBtnContainer: document.createElement("div"),
         confirmBtn: document.createElement("button"),
+        itemsContainer: document.createElement("div"),
     },
     error: {
         container: document.createElement("div"),

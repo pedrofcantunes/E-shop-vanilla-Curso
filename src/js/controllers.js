@@ -31,15 +31,43 @@ App.controllers = {
         this.router()
     },
 
+    confirmPurchase() {
+        console.log("Confirma a Compra", App.state.cart)
+        const res = confirm("Confirma a Compra?")
+        if (res) {
+            App.state.cart = []
+            App.elements.header.cartCount.innerText = App.state.cart.length
+            this.go("home")
+            alert("Compra Realizada com Sucesso!")
+        }
+    },
+
     createProductsElements(container) {
         App.state.products.forEach(product => {
             const card = this.createCard 
-            (product.name, product.description, product.price, product.images, () => {
+            (product.name, product.description, product.price, product.images, "Adicionar ao Carrinho", () => {
            console.log("[clicou]...", product)
-           const res = confirm("Deseja adicinar o produto ao carrinho?")
+           const res = confirm("Deseja adicionar o produto ao carrinho?")
            if (res) {
-            App.state.addToCArt(product)
+            App.state.mutations.addToCArt(product)
             App.elements.header.cartCount.innerText = App.state.cart.length
+           }  
+       })
+       console.log(card)
+       container.appendChild(card)
+       })
+    },
+
+    createCartElements(container) {
+        App.state.cart.forEach(product => {
+            const card = this.createCard 
+            (product.name, product.description, product.price, product.images, "Remover do Carrinho", () => {
+           console.log("[clicou]...", product)
+           const res = confirm("Deseja remover o produto ao carrinho?")
+           if (res) {
+            App.state.mutations.removeFromCart(product)
+            App.elements.header.cartCount.innerText = App.state.cart.length
+            App.controllers.createCheckout()
            }  
        })
        console.log(card)
@@ -93,12 +121,12 @@ App.controllers = {
         const els = App.elements
         const main = els.main.main
 
-        main.itemsContainer
+        main.itemsContainer.innerHTML = ""
         
         main.bg.src = "./assets/bcg.png"
         main.bg.style.width = "100%"
         
-        main.h1.innerText = "Our products"
+        main.h1.innerText = "Nossos Produtos"
         main.h1.style.fontSize = "24px"
         main.h1.style.fontStyle = "normal"
         main.h1.style.fontWeight = "700"
@@ -130,13 +158,20 @@ App.controllers = {
 
     createCheckout () {
         const els = App.elements
-        const { container, title, items, confirmBtn, confirmBtnContainer } = els.main.checkout
+        const { container, title, items, confirmBtn, confirmBtnContainer, itemsContainer } = els.main.checkout
 
         container.style.backgroundColor = "#CCCCCC"
         container.style.height = "100%"
         container.style.paddingTop = "230px"
 
-        title.innerText = "My cart [ Total Amount : xx ]"
+        let total = 0
+        for (let i = 0; i < App.state.cart.length; i++) {
+            const item = App.state.cart[i]
+            total+= item.price
+        }
+        const totalFormatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total)
+       
+        title.innerText = `Meu Carrinho [ Valor Total : ${totalFormatted} ]`
         title.style.fontSize = "24px"
         title.style.fontStyle = "normal"
         title.style.fontWeight = "700"
@@ -144,12 +179,20 @@ App.controllers = {
         title.style.lineHeight = "29px"
         title.style.color = "#000000"
 
-        confirmBtn.innerText = "Confirm purchase"
+        itemsContainer.style.display = "flex"
+        itemsContainer.style.flexWrap = "wrap"
+        itemsContainer.style.justifyContent = "center"
+        itemsContainer.innerHTML = ""
+        this.createCartElements(itemsContainer)
+
+        confirmBtn.innerText = "Confirmar Compra"
         confirmBtn.classList.add("btn")
+        confirmBtn.onclick = () => this.confirmPurchase()
         confirmBtnContainer.style.textAlign = "center"
         confirmBtnContainer.appendChild(confirmBtn)
 
         container.appendChild(title)
+        container.appendChild(itemsContainer)
         container.appendChild(confirmBtnContainer)
 
         els.main.container.innerHTML = ""
@@ -248,7 +291,7 @@ App.controllers = {
         return el
     },
 
-    createCard( title, description, price, imgs, onClick) {
+    createCard( title, description, price, imgs, btnLabel, onClick) {
         const el = document.createElement("div")
 
         el.style.display = "flex"
@@ -288,7 +331,7 @@ App.controllers = {
         desc.style.marginTop = "4px"
         desc.innerHTML = description
        
-        const btn = this.createBtn("Add to cart", "primary", onClick)
+        const btn = this.createBtn(btnLabel, "primary", onClick)
         
         btn.style.marginTop = "4px"
 
